@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MASAI Calculator</title>
+        <style>
+            h1{
+                text-align: center;
+            }
+            #mainbody{
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                height: 400px;
+                width: 300px;
+                margin: auto;
+                justify-content: space-around;
+            }
+            #display{
+                /* border: 2px solid red; */
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                height: 15%;
+                width: 80%;
+                margin: 30px;
+                border-radius: 10px;
+            }
+            #numpad{
+                display: grid;
+                grid-template-columns: repeat(4,1fr);  
+                gap: 8px;
+                margin-right: 30px;
+                margin-left: 30px;
+                /* padding: 5px; */
+                height: 60%;
+                width: auto;
+            }
+           
+            button{
+                border: 0;
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                border-radius: 8px;
+                background-color: white;
+                /* padding: 10px; */
+                font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            }
+            #numpad > :nth-child(13){
+                background-color: red;
+                color: white;
+            }
+            #numpad > :nth-child(4){
+                background-color: black;
+                color: white;
+            }
+            #numpad > :nth-child(8){
+                background-color: black;
+                color: white;
+            }
+            #numpad > :nth-child(12){
+                background-color: black;
+                color: white;
+            }
+            #numpad > :nth-child(15){
+                background-color: black;
+                color: white;
+            }
+            #numpad > :nth-child(16){
+                background-color: black;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 style="color:darkcyan;">Masai Calculator</h1>
+        <div id="mainbody">
+            <br>
+            <div id="display"></div>
+            <div id="numpad">
+                <button style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; ;" class="number">1</button>
+                <button class="number">2</button>
+                <button class="number">3</button>
+                <button class="number">+</button>
+                <button class="number">4</button>
+                <button class="number">5</button>
+                <button class="number">6</button>
+                <button class="number">-</button>
+                <button class="number">7</button>
+                <button class="number">8</button>
+                <button class="number">9</button>
+                <button class="number">x</button>
+                <button class="number">C</button>
+                <button class="number">0</button>
+                <button class="number">=</button>
+                <button class="number">/</button>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const display = document.getElementById('display');
+                const buttons = document.querySelectorAll('.number');
+    
+                let currentInput = '';
+                let firstValue = '';
+                let operator = '';
+    
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const value = this.textContent;
+                        
+                        if (!isNaN(value) || value === '.') {
+                            currentInput += value;
+                            display.textContent = currentInput;
+                        } else if (value === 'C') {
+                            currentInput = '';
+                            firstValue = '';
+                            operator = '';
+                            display.textContent = '';
+                        } else if (value === '=') {
+                            if (currentInput && firstValue && operator) {
+                                const result = operate(parseFloat(firstValue), parseFloat(currentInput), operator);
+                                display.textContent = result;
+                                firstValue = result;
+                                currentInput = '';
+                                operator = '';
+                            }
+                        } else {
+                            if (currentInput && !firstValue) {
+                                firstValue = currentInput;
+                                currentInput = '';
+                                operator = value;
+                            } else if (currentInput && firstValue && operator) {
+                                const result = operate(parseFloat(firstValue), parseFloat(currentInput), operator);
+                                display.textContent = result;
+                                firstValue = result;
+                                currentInput = '';
+                                operator = value;
+                            }
+                        }
+                    });
+                });
+    
+                function operate(a, b, operator) {
+                    switch (operator) {
+                        case '+':
+                            return a + b;
+                        case '-':
+                            return a - b;
+                        case 'x':
+                            return a * b;
+                        case '/':
+                            if (b === 0) {
+                                return "Error: Division by 0";
+                            }
+                            return a / b;
+                        default:
+                            return "Error";
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
