@@ -6,60 +6,158 @@
     <title>Document</title>
 
     <style>
-        .calculator {
-          width: 300px;
-          margin: 0 auto;
-          border: 1px solid black;
+
+        #top {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            width: 300px;
+            margin: auto;
+            gap: 70px;
+            border: 5px;
+            
         }
-    
-        .calculator-display {
-          background-color: white;
-          width: 100%;
-          height: 50px;
-          text-align: right;
-          font-size: 24px;
+        #min {
+            height: 50px;
+            width: 90px;
+            border-color: black;
+            border: 5px;
+            background-color: red;
         }
-    
-        .calculator-buttons {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-around;
+
+        #max {
+            height: 50px;
+            width: 90px;
+            border: 5px;
+            border-color: black;
+            background-color: green;
         }
-    
-        .calculator-button {
-          width: 25px;
-          height: 25px;
-          background-color: #ccc;
-          border: 1px solid black;
-          text-align: center;
-          font-size: 16px;
+
+        #title {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            width: 300px;
+            margin: auto;
+            gap: 70px;
+            
         }
-      </style>
+
+        .name {
+            text-decoration-color: black;
+        }
+
+        #head {
+            margin-left: 760px;
+        }
+
+        #bigbox {
+            height: 100px;
+            width: 210px;
+            background-color: grey;
+            margin-left: 700px;
+        }
+
+        #numpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            height: auto;
+            width: 200px;
+            margin-top: 30px;
+            margin-left: 700px;
+            gap: 30px;
+
+        }
+
+        .green {
+            height: 50px;
+            width: 50px;
+            background-color: rgba(13, 117, 13, 0.869);
+            font-size: larger;
+            
+        }
+
+        .orange {
+            height: 50px;
+            width: 50px;
+            background-color: orange;
+            font-size: larger;
+        }
+
+        #purple {
+            height: 50px;
+            width: 50px;
+            background-color: purple;
+            font-size: larger;
+            margin-left: 780px;
+            margin-top: 30px;
+        }
+
+        #last {
+            height: 50px;
+            width: 210px;
+            background-color: black;
+            font-size: larger;
+            margin-left: 700px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    
-    <div class="calculator">
-        <input type="text" class="calculator-display" readonly>
-        <div class="calculator-buttons">
-            
-    <button class="calculator-button">7</button>
-    <button class="calculator-button">8</button>
-    <button class="calculator-button">9</button>
-    <button class="calculator-button">/</button>
-    <button class="calculator-button">4</button>
-    <button class="calculator-button">5</button>
-    <button class="calculator-button">6</button>
-    <button class="calculator-button">*</button>
-    <button class="calculator-button">1</button>
-    <button class="calculator-button">2</button>
-    <button class="calculator-button">3</button>
-    <button class="calculator-button">-</button>
-    <button class="calculator-button">0</button>
-    <button class="calculator-button">.</button>
-    <button class="calculator-button">=</button>          
-    <button class="calculator-button">+</button>
+    <div id="top">
+        <div id="min"></div>
+        <div id="max"></div>
     </div>
+    <div id="title">
+            <h2 class="name">MIN</h2>
+            <h2 class="name">MAX</h2>
     </div>
-    
+
+    <h2 id="head">SCORE</h2>
+    <div id="bigbox"></div>
+
+    <div id="numpad">
+        <button class="green" onclick="addNumber(1)"><b>1</b></button>
+        <button class="orange" onclick="addNumber(2)"><b>2</b></button>
+        <button class="green" onclick="addNumber(3)"><b>3</b></button>
+        <button class="orange" onclick="addNumber(4)"><b>4</b></button>
+        <button class="orange" onclick="addNumber(5)"><b>5</b></button>
+        <button class="orange" onclick="addNumber(6)"><b>6</b></button>
+        <button class="green" onclick="addNumber(7)"><b>7</b></button>
+        <button class="orange" onclick="addNumber(8)"><b>8</b></button>
+        <button class="green" onclick="addNumber(9)"><b>9</b></button>
+    </div>
+    <div>
+        <button id="purple" style="color: white;" onclick="addNumber(0)"><b>0</b></button>
+    </div>
+    <div>
+        <button id="last" style="color: white;" onclick="compareScores()"><b>ENTER</b></button>
+    </div>
+
+    <script>
+        let currentScore = '';
+
+        function addNumber(number) {
+            currentScore += number;
+            document.getElementById('bigbox').innerText = currentScore;
+        }
+
+        function compareScores() {
+            const minScore = parseInt(document.getElementById('min').innerText);
+            const maxScore = parseInt(document.getElementById('max').innerText);
+            const score = parseInt(currentScore);
+
+            if (score < minScore || minScore === 0) {
+                document.getElementById('min').innerText = score;
+            }
+
+            if (score > maxScore) {
+                document.getElementById('max').innerText = score;
+            }
+
+            // Reset the score box
+            currentScore = '';
+            document.getElementById('bigbox').innerText = '';
+        }
+    </script>
+       
 </body>
 </html>
